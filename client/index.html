@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collaborative Canvas</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="room-selection-modal">
+      <div id="room-form">
+        <h2>Join or Create a Room</h2>
+        <input
+          type="text"
+          id="userNameInput"
+          placeholder="Enter your name"
+          required
+          maxlength="15"
+        />
+        <input
+          type="text"
+          id="roomIdInput"
+          placeholder="Enter Room ID (e.g., 'art-101')"
+          required
+        />
+        <button id="joinRoomBtn">Join / Create</button>
+      </div>
+    </div>
+    <div id="app-container" style="display: none">
+      <h2>🎨 Collaborative Canvas</h2>
+
+      <div id="toolbar">
+        <input type="color" id="colorPicker" value="#000000" />
+        <input type="range" id="brushSize" min="1" max="20" value="4" />
+        <button id="eraserBtn">Eraser</button>
+        <button id="clearAllBtn">Clear All</button>
+        <button id="undoBtn">Undo</button>
+        <button id="redoBtn">Redo</button>
+      </div>
+
+      <div id="user-panel">
+        <h3>👥 Users in Room (<span id="currentRoomId">...</span>)</h3>
+        <ul id="userList"></ul>
+      </div>
+
+      <div id="canvas-container">
+        <canvas id="drawing-board" width="800" height="500"></canvas>
+        <canvas id="cursor-layer" width="800" height="500"></canvas>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="websocket.js"></script>
+    <script src="canvas.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

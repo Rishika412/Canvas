@@ -1,0 +1,265 @@
+:root {
+  --primary-color: #4363d8;
+  --secondary-color: #3cb44b;
+  --bg-color: #f7f9fc;
+  --card-bg: white;
+  --text-color: #333;
+  --border-color: #e0e0e0;
+}
+
+body {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-color);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------
+   LAYOUT
+   ------------------------------ */
+#app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  flex-grow: 1;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+/* ------------------------------
+   TOOLBAR & CONTROLS
+   ------------------------------ */
+#toolbar {
+  padding: 15px;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+#colorPicker {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
+}
+#colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+#colorPicker::-webkit-color-swatch {
+  border: none;
+  border-radius: 4px;
+}
+
+#brushSize {
+  width: 100px;
+}
+
+/* Base style for all buttons in toolbar */
+#toolbar button {
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+#toolbar button:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-1px);
+}
+
+#eraserBtn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+#eraserBtn.active:hover {
+  background-color: #3552b9;
+}
+
+#undoBtn,
+#redoBtn {
+  background-color: #fff;
+}
+
+#clearAllBtn {
+  background-color: #ff4d4d;
+  color: white;
+  border-color: #ff4d4d;
+}
+
+#clearAllBtn:hover {
+  background-color: #cc0000;
+  border-color: #cc0000;
+}
+
+/* ------------------------------
+   CANVAS AREA
+   ------------------------------ */
+#canvas-container {
+  position: relative;
+  width: 800px;
+  height: 500px;
+  margin: 20px auto;
+  display: block;
+  /* Updated border/shadow */
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#drawing-board {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--card-bg);
+  z-index: 1;
+}
+
+#cursor-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ------------------------------
+   USER PANEL
+   ------------------------------ */
+#user-panel {
+  width: 200px;
+  margin: 10px auto;
+  padding: 15px;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+#user-panel h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 5px;
+}
+
+#currentRoomId {
+  font-weight: normal;
+  font-size: 14px;
+  color: #666;
+}
+
+#userList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#userList li {
+  padding: 6px 8px;
+  background: var(--bg-color);
+  border-radius: 4px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.user-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ------------------------------
+   ROOM SELECTION MODAL
+   ------------------------------ */
+#room-selection-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Darker backdrop */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* High z-index */
+}
+
+#room-form {
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 350px;
+  text-align: center;
+}
+
+#room-form h2 {
+  color: var(--text-color);
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 24px;
+}
+
+#room-form input {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+#room-form input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+#joinRoomBtn {
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+#joinRoomBtn:hover {
+  background-color: #3552b9;
+  transform: translateY(-2px);
+}
